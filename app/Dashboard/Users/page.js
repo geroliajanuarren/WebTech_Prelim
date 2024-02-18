@@ -34,17 +34,37 @@ const User = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const fetchUsers = () => {
+        const fetchData = async () => {
+          try {
             setLoading(true);
-            fetch('https://jsonplaceholder.typicode.com/users')
-                .then(response => response.json())
-                .then(json => {
-                    setUser(json);
-                    setLoading(false);
-                });
-        }
-        fetchUsers();
+            const responseUser = await fetch(
+              "https://jsonplaceholder.typicode.com/users"
+            );
+            const jsonUser = await responseUser.json();
+            setUser(jsonUser);
+            setLoading(false)
+          } catch (error) {
+            console.error("Error fetching data:", error);
+            setLoading(false);
+          }
+        };
+    
+        fetchData();
     }, []);
+
+
+    // useEffect(() => {
+    //     const fetchUsers = () => {
+    //         setLoading(true);
+    //         fetch('https://jsonplaceholder.typicode.com/users')
+    //             .then(response => response.json())
+    //             .then(json => {
+    //                 setUser(json);
+    //                 setLoading(false);
+    //             });
+    //     }
+    //     fetchUsers();
+    // }, []);
 
     return (
         <>

@@ -5,6 +5,7 @@ import Navbar from "../navbar";
 import { Card, CardActionArea, CardContent, Grid, Skeleton, Typography,  Button, IconButton, ListItemIcon } from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import { TurnLeft } from "@mui/icons-material";
 
 
 const Post = () => {
@@ -20,28 +21,55 @@ const Post = () => {
 
 
     useEffect(() => {
-        const fetchPosts = () => {
-            setLoading(true)
-            fetch('https://jsonplaceholder.typicode.com/posts')
-                .then(response => response.json())
-                .then(json => {
-                    setPosts(json);
-                    setLoading(false)
-                });
+        const fetchData = async () => {
+          try {
+            setLoading(true);
+            const responsePosts = await fetch(
+              "https://jsonplaceholder.typicode.com/posts"
+            );
+            const jsonPosts = await responsePosts.json();
+            setPosts(jsonPosts);
+    
+            const responseUsers = await fetch(
+              "https://jsonplaceholder.typicode.com/users"
+            );
+            const jsonUsers = await responseUsers.json();
+            setUsers(jsonUsers);
+            
+            setLoading(false);
+          } catch (error) {
+            console.error("Error fetching data:", error);
+            setLoading(false);
+          }
         };
-        fetchPosts();
-
-        const fetchUsers = () => {
-            setLoading(true)
-            fetch('https://jsonplaceholder.typicode.com/users')
-                .then(response => response.json())
-                .then(json => {
-                    setUsers(json);
-                    setLoading(false)
-                });
-        }
-        fetchUsers();
+    
+        fetchData();
     }, []);
+
+
+    // useEffect(() => {
+    //     const fetchPosts = () => {
+    //         setLoading(true)
+    //         fetch('https://jsonplaceholder.typicode.com/posts')
+    //             .then(response => response.json())
+    //             .then(json => {
+    //                 setPosts(json);
+    //                 setLoading(false)
+    //             });
+    //     };
+    //     fetchPosts();
+
+    //     const fetchUsers = () => {
+    //         setLoading(true)
+    //         fetch('https://jsonplaceholder.typicode.com/users')
+    //             .then(response => response.json())
+    //             .then(json => {
+    //                 setUsers(json);
+    //                 setLoading(false)
+    //             });
+    //     }
+    //     fetchUsers();
+    // }, []);
 
  
 

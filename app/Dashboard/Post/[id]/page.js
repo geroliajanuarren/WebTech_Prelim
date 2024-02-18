@@ -10,22 +10,36 @@ import { useRouter } from "next/navigation";
 const Comments = ({params}) => {
     const router = useRouter();
     const postId = params.id;
-    const [user, setUser] = useState([]);
     const [comment, setComment] = useState([]);
  
-
-
     useEffect(() => {
-            const fetchCommnet = () => {
-              fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`)
-                .then((response) => response.json())
-                .then((json) => {
-                  setComment(json);
-                });
-            };
+        const fetchData = async () => {
+          try {
+            const responseComments = await fetch(
+              `https://jsonplaceholder.typicode.com/posts/${postId}/comments`
+            );
+            const jsonComments = await responseComments.json();
+            setComment(jsonComments);
+        
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        };
+    
+        fetchData();
+    }, [postId]);
+
+    // useEffect(() => {
+    //         const fetchCommnet = () => {
+    //           fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`)
+    //             .then((response) => response.json())
+    //             .then((json) => {
+    //               setComment(json);
+    //             });
+    //         };
       
-            fetchCommnet();
-    }, []);
+    //         fetchCommnet();
+    // }, []);
     return ( <>
         <Navbar/>
         <Button variant="contained" color="success" onClick={() => router.back()} sx={{marginTop:'100px', marginLeft: '40px'}}>Go Back</Button>

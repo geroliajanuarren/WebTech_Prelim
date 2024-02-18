@@ -14,27 +14,54 @@ const Todo = ({params}) => {
     const userId = params.id;
     const router = useRouter();
 
-    useEffect(() => {
-        const fetchUserTodo = () => {
-            fetch(`https://jsonplaceholder.typicode.com/users/${userId}/todos`)
-                .then(response => response.json())
-                .then(json => {
-                    setTodo(json);
-                });
-        }
-        fetchUserTodo()
 
-        const fetchUsers = () => {
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const responseTodo = await fetch(
+              `https://jsonplaceholder.typicode.com/users/${userId}/todos`
+            );
+            const jsonTodo = await responseTodo.json();
+            setTodo(jsonTodo);
+    
+            const responseUser = await fetch(
+              `https://jsonplaceholder.typicode.com/users/${userId}`
+            );
+            const jsonUser = await responseUser.json();
+            setUser(jsonUser);
+        
+          } catch (error) {
+            console.error("Error fetching data:", error);
+            setLoading(false);
+          }
+        };
+    
+        fetchData();
+    }, [userId]);
+
+
+
+    // useEffect(() => {
+    //     const fetchUserTodo = () => {
+    //         fetch(`https://jsonplaceholder.typicode.com/users/${userId}/todos`)
+    //             .then(response => response.json())
+    //             .then(json => {
+    //                 setTodo(json);
+    //             });
+    //     }
+    //     fetchUserTodo()
+
+    //     const fetchUsers = () => {
            
-            fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
-                .then(response => response.json())
-                .then(json => {
-                    setUser(json);
-                });
+    //         fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
+    //             .then(response => response.json())
+    //             .then(json => {
+    //                 setUser(json);
+    //             });
             
-        }
-        fetchUsers();
-    }, [])
+    //     }
+    //     fetchUsers();
+    // }, [])
 
 
 
