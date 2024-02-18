@@ -5,7 +5,7 @@ import Navbar from "../navbar";
 import { Card, CardActionArea, CardContent, Grid, Skeleton, Typography,  Button, IconButton, ListItemIcon } from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import { TurnLeft } from "@mui/icons-material";
+
 
 
 const Post = () => {
@@ -21,6 +21,8 @@ const Post = () => {
 
 
     useEffect(() => {
+        const windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+        console.log(windowHeight);
         const fetchData = async () => {
           try {
             setLoading(true);
@@ -45,33 +47,6 @@ const Post = () => {
     
         fetchData();
     }, []);
-
-
-    // useEffect(() => {
-    //     const fetchPosts = () => {
-    //         setLoading(true)
-    //         fetch('https://jsonplaceholder.typicode.com/posts')
-    //             .then(response => response.json())
-    //             .then(json => {
-    //                 setPosts(json);
-    //                 setLoading(false)
-    //             });
-    //     };
-    //     fetchPosts();
-
-    //     const fetchUsers = () => {
-    //         setLoading(true)
-    //         fetch('https://jsonplaceholder.typicode.com/users')
-    //             .then(response => response.json())
-    //             .then(json => {
-    //                 setUsers(json);
-    //                 setLoading(false)
-    //             });
-    //     }
-    //     fetchUsers();
-    // }, []);
-
- 
 
 
     return (

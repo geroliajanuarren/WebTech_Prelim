@@ -16,6 +16,8 @@ const Todo = ({params}) => {
 
 
     useEffect(() => {
+        const windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+        console.log(windowHeight);
         const fetchData = async () => {
           try {
             const responseTodo = await fetch(
@@ -40,28 +42,6 @@ const Todo = ({params}) => {
     }, [userId]);
 
 
-
-    // useEffect(() => {
-    //     const fetchUserTodo = () => {
-    //         fetch(`https://jsonplaceholder.typicode.com/users/${userId}/todos`)
-    //             .then(response => response.json())
-    //             .then(json => {
-    //                 setTodo(json);
-    //             });
-    //     }
-    //     fetchUserTodo()
-
-    //     const fetchUsers = () => {
-           
-    //         fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
-    //             .then(response => response.json())
-    //             .then(json => {
-    //                 setUser(json);
-    //             });
-            
-    //     }
-    //     fetchUsers();
-    // }, [])
 
 
 

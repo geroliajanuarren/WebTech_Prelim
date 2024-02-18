@@ -16,10 +16,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import TabContext from '@mui/lab/TabContext';
 
-import Home from './Home/page';
-import Post from './Post/page';
-import User from './Users/page';
-
+import dynamic from 'next/dynamic';
 
 const drawerWidth = 220;
 
@@ -81,11 +78,20 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
   );
   
-  // ... (your existing code)
   
 
-
+  const DynamicHeader = dynamic(() => import('./Home/page'), {
+    ssr: false
+  }) 
+  const DynamicHeader2 = dynamic(() => import('./Post/page'), {
+    ssr: false
+  }) 
+  const DynamicHeader3 = dynamic(() => import('./Users/page'), {
+    ssr: false
+  }) 
+ 
 export default function Dashboard() {
+ 
     const theme = useTheme();
     const open = UseApp ((state) => state.Nopen);
 
@@ -96,7 +102,8 @@ export default function Dashboard() {
     };
     console.log(value)
 
-
+    const windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+    console.log(windowHeight);
 
 
 
@@ -115,7 +122,7 @@ export default function Dashboard() {
             </DrawerHeader>
 
             <Divider />
-            <TabContext value={value.toString()}>
+            <TabContext>
                 <TabList
                     orientation="vertical"
                     value={value}
@@ -133,24 +140,27 @@ export default function Dashboard() {
                                 px: 2.5,
                                 }}
                             >
-                            <React.Fragment sx={{ fontSize: 16, opacity: open ? 1 : 0,  alignItems: 'center' }}>
+                      
+                                <React.Fragment sx={{ fontSize: 16, opacity: open ? 1 : 0,  alignItems: 'center' }}>
 
-                                        <ListItemIcon
-                                        sx={{
-                                            minWidth: 0,
-                                            mr: open ? 3 : 'auto',
-                                            justifyContent: 'center',
-                                        }}
-                                        >
-                                        <OtherHousesOutlinedIcon color="primary" sx={{fontSize: 30, marginLeft: -2.6,}}/>
-                                        </ListItemIcon>                   
-                                        <ListItemText primary="Home" sx={{ color: 'Gray', alignItems: "center", opacity: open ? 1 : 0 }} />
-                                  
-                            </React.Fragment>
+                                    <ListItemIcon
+                                    sx={{
+                                        minWidth: 0,
+                                        mr: open ? 3 : 'auto',
+                                        justifyContent: 'center',
+                                    }}
+                                    >
+                                    <OtherHousesOutlinedIcon color="primary" sx={{fontSize: 30, marginLeft: -2.6,}}/>
+                                    </ListItemIcon>                   
+                                    <ListItemText primary="Home" sx={{ color: 'Gray', alignItems: "center", opacity: open ? 1 : 0 }} />
+
+                                </React.Fragment>
+                           
                             </ListItem>  
                         }
                     />
                     <Tab
+                        
                         label={
                             <ListItem                
                                 sx={{
@@ -210,15 +220,15 @@ export default function Dashboard() {
             <TabContext value={value.toString()}>
                 <TabPanel value="0">
                     <h1 style={{marginTop: -30,}} >My Dashboard</h1>
-                    <Home/>
+                    <DynamicHeader/>
                 </TabPanel>
                 <TabPanel value="1">
                     <h1 style={{marginTop: -25}}>Posts</h1>
-                    <Post/>
+                    <DynamicHeader2/>
                 </TabPanel>
                 <TabPanel value="2">           
                     <h1 style={{marginTop: -25}}>Users</h1>
-                    <User/>
+                    <DynamicHeader3/>
                 </TabPanel>
             </TabContext>
         </Box>

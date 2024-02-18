@@ -34,6 +34,8 @@ const User = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        const windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+        console.log(windowHeight);
         const fetchData = async () => {
           try {
             setLoading(true);
@@ -51,20 +53,6 @@ const User = () => {
     
         fetchData();
     }, []);
-
-
-    // useEffect(() => {
-    //     const fetchUsers = () => {
-    //         setLoading(true);
-    //         fetch('https://jsonplaceholder.typicode.com/users')
-    //             .then(response => response.json())
-    //             .then(json => {
-    //                 setUser(json);
-    //                 setLoading(false);
-    //             });
-    //     }
-    //     fetchUsers();
-    // }, []);
 
     return (
         <>
@@ -112,7 +100,7 @@ const User = () => {
                                                     Company Name: {users.company.name}
                                                 </Typography>
                                             {/* <Button variant="outlined" href={`/Dashboard/Todo?userId=${router.query.userId}`} gutterBottom sx={{ marginTop: '20px' }}>{`View User's Todo's`}</Button>  */}
-                                            <Button variant="outlined" onClick={() => router.push(`/Dashboard/Users/${users.id}`)} sx={{ marginTop: '20px' }}>View Comment</Button>
+                                            <Button variant="outlined" onClick={() => router.push(`/Dashboard/Users/${users.id}`)} sx={{ marginTop: '20px' }}>View Task</Button>
 
                                             </CardContent>
 

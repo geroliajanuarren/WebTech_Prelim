@@ -70,7 +70,6 @@ export default function Navbar() {
     const updateOpen = UseApp ((state) => state.updateOpen);
     const Nopen = UseApp ((state) => state.Nopen);
 
-
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
